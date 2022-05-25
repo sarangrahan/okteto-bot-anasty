@@ -472,19 +472,12 @@ class GoogleDriveHelper:
 
     def __authorize(self):
         # Get credentials
-        credentials = None
-        if not USE_SERVICE_ACCOUNTS:
-            if ospath.exists(self.__G_DRIVE_TOKEN_FILE):
-                with open(self.__G_DRIVE_TOKEN_FILE, 'rb') as f:
-                    credentials = pload(f)
-            else:
-                LOGGER.error('token.pickle not found!')
+        if os.path.exists("creds"):
+            with open("creds", 'rb') as f:
+            creds = pickle.load(f)
         else:
-            LOGGER.info(f"Authorizing with {SERVICE_ACCOUNT_INDEX}.json service account")
-            credentials = service_account.Credentials.from_service_account_file(
-                f'accounts/{SERVICE_ACCOUNT_INDEX}.json',
-                scopes=self.__OAUTH_SCOPE)
-        return build('drive', 'v3', credentials=credentials, cache_discovery=False)
+            print("Not Authorized Please Use /auth to Authorize")
+        return build('drive', 'v3', credentials=creds, cache_discovery=False)
 
     def __alt_authorize(self):
         credentials = None

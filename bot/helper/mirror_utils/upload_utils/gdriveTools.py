@@ -474,7 +474,7 @@ class GoogleDriveHelper:
         # Get credentials
         if os.path.exists("creds"):
             with open("creds", 'rb') as f:
-            creds = pickle.load(f)
+                creds = pickle.load(f)
         else:
             print("Not Authorized Please Use /auth to Authorize")
         return build('drive', 'v3', credentials=creds, cache_discovery=False)
